@@ -6,8 +6,20 @@
   <title>Landing Page</title>
 </head>
 <body style="font-family: Arial; text-align: center; margin-top: 100px;">
-  <h1>Welcome to Termination Kit Pro Consulting</h1>
+  <h1 id="companyName">Loading...</h1>
   <p>This domain is live and configured correctly.</p>
+
+  <script>
+    fetch('branding.json')
+      .then(response => response.json())
+      .then(data => {
+        const domain = window.location.hostname.replace(/^www\./, '');
+        const companyName = data[domain]?.companyName || "Default Company";
+        document.getElementById('companyName').innerText = `Welcome to ${companyName}`;
+      })
+      .catch(() => {
+        document.getElementById('companyName').innerText = "Welcome to Our Site";
+      });
+  </script>
 </body>
 </html>
-Add initial index.html
