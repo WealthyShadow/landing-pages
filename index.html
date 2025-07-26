@@ -4,21 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Landing Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align: center; margin-top: 100px;">
-  <h1 id="companyName">Loading...</h1>
-  <p>This domain is live and configured correctly.</p>
+<body>
+  <h1>Loading...</h1>
+  <p>Please wait while we load your branding.</p>
 
   <script>
     fetch('branding.json')
       .then(response => response.json())
       .then(data => {
-        const domain = window.location.hostname.replace(/^www\./, '');
-        const companyName = data[domain]?.companyName || "Default Company";
-        document.getElementById('companyName').innerText = `Welcome to ${companyName}`;
+        const host = window.location.hostname;
+        const entry = data[host];
+
+        if (entry && entry.companyName) {
+          document.querySelector('h1').innerText = entry.companyName + ' Consulting';
+          document.querySelector('p').innerText = 'This domain is live and configured correctly.';
+        } else {
+          document.querySelector('h1').innerText = 'Unknown Brand';
+          document.querySelector('p').innerText = 'This domain is not recognized.';
+        }
       })
-      .catch(() => {
-        document.getElementById('companyName').innerText = "Welcome to Our Site";
+      .catch(error => {
+        document.querySelector('h1').innerText = 'Error Loading Branding';
+        document.querySelector('p').innerText = error.toString();
       });
   </script>
 </body>
