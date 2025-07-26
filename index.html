@@ -1,40 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Landing Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Loading...</h1>
-  <p>Please wait while we load your branding.</p>
-
-  <script>
-    fetch('branding.json')
-      .then(response => response.json())
-      .then(data => {
-        const host = window.location.hostname;
-        const entry = data[host];
-
-        if (entry && entry.companyName) {
-          document.querySelector('h1').innerText = entry.companyName + ' Consulting';
-          document.querySelector('p').innerText = 'This domain is live and configured correctly.';
-        } else {
-          document.querySelector('h1').innerText = 'Unknown Brand';
-          document.querySelector('p').innerText = 'This domain is not recognized.';
-        }
-      })
-      .catch(error => {
-        document.querySelector('h1').innerText = 'Error Loading Branding';
-        document.querySelector('p').innerText = error.toString();
-      });
-  </script>
-</body>
+<html>
+  <head>
+    <title>Loading...</title>
+  </head>
+  <body>
+    <h1 id="headline">Loading...</h1>
+    <p id="bodycopy">Please wait...</p>
+    <script src="routing.js"></script>
+  </body>
 </html>
